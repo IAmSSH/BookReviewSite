@@ -1,0 +1,16 @@
+<% include partials/header %>
+
+<h1><%= book.name %></h1>
+
+<img class="ui big rounded image" src="<%= book.image %>" alt="Book image">
+
+<div class="ui segment" id="bottom-margin-show-page">
+    <p><%= book.review %></p>
+    <div class="ui divider"></div>   
+        <a class="mini ui blue basic button" href="/books/<%= book._id %>/edit">Edit</a>
+        <form action="/books/<%= book._id %>?_method=DELETE" method="POST" style="display: inline">
+            <button class="mini ui red basic button">Delete</button>
+        </form>
+</div>
+
+<% include partials/footer %>

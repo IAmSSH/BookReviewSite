@@ -1,0 +1,13 @@
+<% include partials/header %>
+
+<h1>Search Books</h1>
+<form action="/books/find" method="GET">
+    <div class="ui search">
+        <div class="ui input">
+            <input class="prompt" placeholder="Name of Book..." type="text" name="bookName">
+        </div>
+        <button class="ui grey basic button" style="display:block">Submit</button>
+    </div>    
+</form>
+
+<% include partials/footer %>
