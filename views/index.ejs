@@ -9,7 +9,7 @@
     <% books.forEach(function(book) { %>    
       <span class="card">
         <a class="image" href="/books/<%= book._id %>">
-          <img src="https://images.pexels.com/photos/590493/pexels-photo-590493.jpeg?auto=compress&cs=tinysrgb&h=750&w=1260">
+          <img src="<%= book.image %>">
         </a>
         <div class="content">
           <a class="header" href="/books/<%= book._id %>"><%= book.name %></a>

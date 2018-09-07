@@ -5,21 +5,26 @@
         <div class="ui items">
             <div class="item">
                 <div class="image">
-                <p><%= book.volumeInfo.imageLinks.thumbnail %></p>
+                    <% if(book.volumeInfo.imageLinks) { %>
+                        <img src="<%= book.volumeInfo.imageLinks.thumbnail %>">
+                        <% var img = book.volumeInfo.imageLinks.thumbnail %>
+                    <% } %>                
                 </div>
                 <div class="content">
-                <a class="header" href="/books/new/<%= book.volumeInfo.title %>"><p><%= book.volumeInfo.title %></p></a>
-                <div class="meta">
-                    <span><% for(var i = 0; i < book.volumeInfo.authors.length; i++){ %>
-                        <p><%= book.volumeInfo.authors[i] %></p>        
-                    <% } %></span>
-                </div>
-                <div class="description">
-                    <p><%= book.volumeInfo.description %></p>
-                </div>
-                <div class="extra">
-                    <%= book.volumeInfo.publisher %>
-                </div>
+                    <a class="header" href="/books/new/<%= book.volumeInfo.title %>"><p><%= book.volumeInfo.title %></p></a>
+                    <div class="meta">                   
+                        <span>
+                            <% for(var i = 0; i < book.volumeInfo.authors.length; i++){ %>
+                            <p><%= book.volumeInfo.authors[i] %></p>        
+                            <% } %>
+                        </span>                  
+                    </div>
+                    <div class="description">
+                        <p><%= book.volumeInfo.description %></p>
+                    </div>
+                    <div class="extra">
+                        <%= book.volumeInfo.publisher %>
+                    </div>
                 </div>
             </div>        
         </div>

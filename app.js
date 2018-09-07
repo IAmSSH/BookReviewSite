@@ -4,7 +4,8 @@ var Book            = require("/Programming/web-projects/BookReviewSite/models/b
     mongoose        = require("mongoose"),
     express         = require("express"),
     request         = require("request"),
-    app             = express();
+    app             = express(),
+    gBookImage;
 
     // SETUP CODE
     app.set("view engine", "ejs");
@@ -35,16 +36,13 @@ app.get("/books", function(req, res) {
         } else {
             res.render("index", {books: books});
         }
-    })
+    });
 });
 
-// NEW ROUTE
-// app.get("/books/new", function(req, res) {
-//     res.render("new-without-params");
-// });
 app.get("/books/new/:bookName", function(req, res) {
-    var bookName = req.params.bookName;
-    res.render("new", {bookName: bookName});
+    var bookName  = req.params.bookName;
+    var bookImage = req.params.bookImage;
+    res.render("new", {bookName: bookName, bookImage: bookImage});
 });
 
 // CREATE ROUTE
@@ -57,7 +55,7 @@ app.post("/books/create", function(req, res) {
         } else {
             res.redirect("/books");
         }
-    })
+    });
 });
 
 // SEARCH PAGE RENDER
@@ -75,8 +73,6 @@ app.get("/books/find", function(req, res) {
     request(url, function(error, response, body) {
         if(!error && response.statusCode == 200) {
             var data = JSON.parse(body);
-            // res.send(data);
-            console.log(data.items[0].volumeInfo.imageLinks.thumbnail);
             res.render('result', {data: data.items});
         }
     });
