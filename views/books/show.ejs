@@ -1,4 +1,4 @@
-<% include partials/header %>
+<% include ../partials/header %>
 
 <h1><%= book.name %></h1>
 
@@ -14,6 +14,12 @@
 </div>
 
 <div class="ui segment">
-    <a href="#" class="ui button">Add a comment</a>
-    </div>
-<% include partials/footer %>
+    <a href="/books/<%= book._id %>/comments/new" class="ui button">Add a comment</a>
+    <div class="ui divider"></div>
+    <% book.comments.forEach(function(comment){ %>
+        <p>
+            <%= comment.content %>
+        </p>
+    <% }); %>
+</div>
+<% include ../partials/footer %>
