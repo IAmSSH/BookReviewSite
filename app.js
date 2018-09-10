@@ -5,7 +5,12 @@ var Book            = require("/Programming/web-projects/BookReviewSite/models/b
     express         = require("express"),
     request         = require("request"),
     app             = express(),
-    commentRoutes   = require("./routes/comments");
+    localStrategy   = require('passport-local'),
+    passportLocalMongoose = require('passport-local-mongoose'),
+    passport        = require('passport'),
+    commentRoutes   = require("./routes/comments"),
+    User = require('./models/User'),
+    indexRoutes = require('./routes/index'),
     bookRoutes      = require("./routes/books");
 
     // SETUP CODE
@@ -14,7 +19,22 @@ var Book            = require("/Programming/web-projects/BookReviewSite/models/b
     app.use(express.static(__dirname + '/public'));
     mongoose.connect("mongodb://localhost/book_review_app");
     app.use(methodOverride('_method'));
+    
+    app.use(require('express-session')({
+        secret: 'I love Coooding',
+        resave: false,
+        saveUninitialized: false
+    }));
+    app.use(passport.initialize());
+    app.use(passport.session());
+
+    passport.use(new localStrategy(User.authenticate()));
+
+    passport.serializeUser(User.serializeUser());
+    passport.deserializeUser(User.deserializeUser());
+
     app.use(commentRoutes);
+    app.use(indexRoutes);
     app.use(bookRoutes);
 
 

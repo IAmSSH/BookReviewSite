@@ -1,0 +1,17 @@
+<% include partials/header %>
+
+<br>
+<h1 style="text-align: center">Sign up</h1>
+<form class="ui form" action="/books/register" method="POST">
+    <div class="field">
+        <label>Username</label>
+        <input type="text" name="user[name]">
+    </div>
+    <div class="field">
+        <label>Password</label>
+        <input type="password" name="user[password]">
+    </div>
+    <button class="ui button" type="submit">Submit</button>
+</form>
+
+<% include partials/footer %>
