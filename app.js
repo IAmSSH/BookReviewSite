@@ -1,17 +1,17 @@
-var Book            = require("/Programming/web-projects/BookReviewSite/models/book"),
-    methodOverride  = require("method-override"),
-    bodyParser      = require("body-parser"),
-    mongoose        = require("mongoose"),
-    express         = require("express"),
-    request         = require("request"),
-    app             = express(),
-    localStrategy   = require('passport-local'),
-    passportLocalMongoose = require('passport-local-mongoose'),
-    passport        = require('passport'),
-    commentRoutes   = require("./routes/comments"),
-    User = require('./models/User'),
-    indexRoutes = require('./routes/index'),
-    bookRoutes      = require("./routes/books");
+var Book                    = require("/Programming/web-projects/BookReviewSite/models/book"),
+    passportLocalMongoose   = require('passport-local-mongoose'),
+    commentRoutes           = require("./routes/comments"),
+    methodOverride          = require("method-override"),
+    bookRoutes              = require("./routes/books"),
+    localStrategy           = require('passport-local'),
+    indexRoutes             = require('./routes/index'),
+    User                    = require('./models/User'),
+    bodyParser              = require("body-parser"),
+    passport                = require('passport'),
+    mongoose                = require("mongoose"),
+    express                 = require("express"),
+    request                 = require("request"),
+    app                     = express();
 
     // SETUP CODE
     app.set("view engine", "ejs");
@@ -25,17 +25,16 @@ var Book            = require("/Programming/web-projects/BookReviewSite/models/b
         resave: false,
         saveUninitialized: false
     }));
+
     app.use(passport.initialize());
     app.use(passport.session());
-
     passport.use(new localStrategy(User.authenticate()));
-
     passport.serializeUser(User.serializeUser());
     passport.deserializeUser(User.deserializeUser());
 
-    app.use(commentRoutes);
     app.use(indexRoutes);
     app.use(bookRoutes);
+    app.use(commentRoutes);
 
 
     // seedDB();
