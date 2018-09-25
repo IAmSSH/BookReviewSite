@@ -6,20 +6,6 @@ var Book = require('../models/book')
     Comment = require("../models/comment"), 
     router = express.Router();
 
-// ROOT ROUTE
-router.get("/", function(req, res) {
-    res.redirect("/books");
-});
-router.get("/books", function(req, res) {
-    Book.find({}, function(err, books) {
-        if(err) {
-            console.log(err);
-        } else {
-            res.render("books/index", {books: books});
-        }
-    });
-});
-
 // NEW ROUTE
 router.get("/books/new/:bookName", function(req, res) {
     var bookName  = req.params.bookName;
