@@ -6,6 +6,20 @@ var Book = require('../models/book')
     Comment = require("../models/comment"), 
     router = express.Router();
 
+// ROOT ROUTE
+router.get("/", function(req, res) {
+    res.redirect("/books");
+});
+router.get("/books", function(req, res) {
+    Book.find({}, function(err, books) {
+        if(err) {
+            console.log(err);
+        } else {
+            res.render("books/index", {books: books});
+        }
+    });
+});
+
 // NEW ROUTE
 router.get("/books/new/:bookName", function(req, res) {
     var bookName  = req.params.bookName;
@@ -34,7 +48,6 @@ router.get("/books/search", function(req, res) {
 // FIND BOOK
 router.get("/books/find", function(req, res) {
     var book = req.query.bookName;
-    console.log(book);
     var regex = / /gi;
     book = book.replace(regex, '+');
     var url = "https://www.googleapis.com/books/v1/volumes?q=" + book;
