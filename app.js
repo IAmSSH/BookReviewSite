@@ -14,11 +14,11 @@ var Book                    = require("/Programming/web-projects/BookReviewSite/
     app                     = express();
 
     // SETUP CODE
+    mongoose.connect("mongodb://localhost/book_review_app");
+    app.use(methodOverride('_method'));
     app.set("view engine", "ejs");
     app.use(bodyParser.urlencoded({extended: true}));
     app.use(express.static(__dirname + '/public'));
-    mongoose.connect("mongodb://localhost/book_review_app");
-    app.use(methodOverride('_method'));
     
     app.use(require('express-session')({
         secret: 'I love Coooding',

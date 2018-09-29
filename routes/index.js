@@ -1,10 +1,10 @@
-var express = require('express'),
-User        = require('../models/User'),
-localStrategy           = require('passport-local'),
-passport    = require('passport'),
-passportLocalMongoose   = require('passport-local-mongoose'),
-Book = require('../models/book'),
-router      = express.Router();
+var passportLocalMongoose   = require('passport-local-mongoose'),
+    User                    = require('../models/User'),
+    localStrategy           = require('passport-local'),
+    Book                    = require('../models/book'),
+    passport                = require('passport'),
+    express                 = require('express'),
+    router                  = express.Router();
 
 // ROOT ROUTE
 router.get("/", function(req, res) {
