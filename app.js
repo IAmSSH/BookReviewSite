@@ -14,7 +14,7 @@ var Book                    = require("/Programming/web-projects/BookReviewSite/
     app                     = express();
 
     // SETUP CODE
-    mongoose.connect("mongodb://localhost/book_review_app");
+    mongoose.connect("mongodb://localhost/book_review_app1");
     app.use(methodOverride('_method'));
     app.set("view engine", "ejs");
     app.use(bodyParser.urlencoded({extended: true}));
