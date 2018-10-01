@@ -2,7 +2,7 @@ var Book = require('../models/book')
     express = require('express'),
     mongoose = require("mongoose"),
     User = require('../models/User'),
-    passport = require('passport'),
+    passport = require('passport'),    
     router = express.Router();
 
 // REGISTER ROUTE
@@ -25,7 +25,14 @@ router.post("/register", (req, res) => {
 
 // LOGIN ROUTE
 router.get("/login", function(req, res) {
-    res.send("Login Route");
+    res.render("login");
+});
+
+router.post('/login', passport.authenticate('local', {
+    successRedirect: '/books',
+    failureRedirect: '/login'
+}), (req, res) => {
+
 });
 
 module.exports = router;

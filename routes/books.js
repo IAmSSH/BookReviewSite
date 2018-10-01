@@ -3,6 +3,7 @@ var Book = require('../models/book')
     request = require("request"),
     bodyParser = require("body-parser"),
     mongoose = require("mongoose"),
+    middleware = require('../middleware/index'),
     Comment = require("../models/comment"), 
     router = express.Router();
 
@@ -21,14 +22,14 @@ router.get("/books", function(req, res) {
 });
 
 // NEW ROUTE
-router.get("/books/new/:bookName", function(req, res) {
+router.get("/books/new/:bookName", middleware.isLoggedIn, function(req, res) {
     var bookName  = req.params.bookName;
     var bookImage = req.params.bookImage;
     res.render("books/new", {bookName: bookName, bookImage: bookImage});
 });
 
 // CREATE ROUTE
-router.post("/books/create", function(req, res) {
+router.post("/books/create", middleware.isLoggedIn, function(req, res) {
     var newBook = req.body.book;
     Book.create(newBook, function(err, book) {
         if(err) {
@@ -72,7 +73,7 @@ router.get("/books/:id", function(req, res) {
 });
 
 // EDIT ROUTE
-router.get('/books/:id/edit', function(req, res){
+router.get('/books/:id/edit', middleware.isLoggedIn, function(req, res){
     Book.findById(req.params.id, function(err, foundBook) {
         if(err) {
             console.log("Eror finding" + err);
@@ -83,7 +84,7 @@ router.get('/books/:id/edit', function(req, res){
 });
 
 // UPDATE ROUTE
-router.put("/books/:id", function(req, res) {
+router.put("/books/:id", middleware.isLoggedIn, function(req, res) {
     Book.findByIdAndUpdate(req.params.id, req.body.book,function(err, updatedBook) {
         if(err) {
             console.log("Error updating");
@@ -95,7 +96,7 @@ router.put("/books/:id", function(req, res) {
 });
 
 // DELETE ROUTE
-router.delete("/books/:id", function(req, res) {
+router.delete("/books/:id", middleware.isLoggedIn, function(req, res) {
     Book.findByIdAndRemove(req.params.id, function(err) {
         if(err) {
             console.log("error deleting " + err);

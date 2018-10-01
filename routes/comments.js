@@ -1,10 +1,11 @@
 var express = require('express'),
 Book = require('../models/book'),
 mongoose = require('mongoose'),
+middleware = require('../middleware/index'),
 router = express.Router();
 
 // COMMNETS - NEW ROUTE
-router.get("/books/:id/comments/new", function(req, res) {
+router.get("/books/:id/comments/new", middleware.isLoggedIn, function(req, res) {
     Book.findById(req.params.id, function(err, foundBook) {
         if(err) {
             console.log(err);
@@ -15,7 +16,7 @@ router.get("/books/:id/comments/new", function(req, res) {
     });
 });
 
-router.post("/books/:id/comments/create", function(req, res) {
+router.post("/books/:id/comments/create", middleware.isLoggedIn, function(req, res) {
     Book.findById(req.params.id, function(err, foundBook) {
         if(err) {
             console.log(err);

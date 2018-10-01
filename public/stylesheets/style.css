@@ -8,3 +8,14 @@
     width: 40%;
     margin: 0 auto;
 }
+#search-div{
+    padding: 10px;
+}
+#search-form{
+    margin-top: 1em;
+}
+#search-button{
+    display: inline;
+    margin-left: 0.6em;
+    color: #808080;
+}
