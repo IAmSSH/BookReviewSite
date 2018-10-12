@@ -6,11 +6,15 @@
 
 <div class="ui segment" id="bottom-margin-show-page">
     <p><%= book.review %></p>
-    <div class="ui divider"></div>   
-        <a class="mini ui blue basic button" href="/books/<%= book._id %>/edit">Edit</a>
+    <div class="ui divider"></div>
+        <% if(currentUser && book.author.id.equals(currentUser._id)){ %>
+        <a href="/books/<%= book._id %>/edit"><i class="pencil alternate icon"></i></a>
         <form action="/books/<%= book._id %>?_method=DELETE" method="POST" style="display: inline">
-            <button class="mini ui red basic button">Delete</button>
+            <button><i class="trash alternate outline icon"></i></button>
         </form>
+        <% }else { %>
+            <p style="font-style: italic">Created by <b><%= book.author.username %></b></p>
+        <% } %>
 </div>
 
 <div class="ui segment">

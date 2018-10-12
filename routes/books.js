@@ -4,7 +4,8 @@ var Book = require('../models/book')
     bodyParser = require("body-parser"),
     mongoose = require("mongoose"),
     middleware = require('../middleware/index'),
-    Comment = require("../models/comment"), 
+    Comment = require("../models/comment"),
+    recievedBook = [],
     router = express.Router();
 
 // ROOT ROUTE
@@ -31,6 +32,11 @@ router.get("/books/new/:bookName", middleware.isLoggedIn, function(req, res) {
 // CREATE ROUTE
 router.post("/books/create", middleware.isLoggedIn, function(req, res) {
     var newBook = req.body.book;
+    newBook.author = {
+        id: req.user._id,
+        username: req.user.username
+    };
+    newBook.writer = recievedBook.
     Book.create(newBook, function(err, book) {
         if(err) {
             console.log("Error creating book");
@@ -55,6 +61,7 @@ router.get("/books/find", function(req, res) {
     request(url, function(error, response, body) {
         if(!error && response.statusCode == 200) {
             var data = JSON.parse(body);
+            recievedBook = [...data.items];
             res.render("books/result", {data: data.items});
         }
     });

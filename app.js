@@ -1,11 +1,11 @@
 var Book                    = require("/Programming/web-projects/BookReviewSite/models/book"),
-    User                    = require("./models/User"),
     passportLocalMongoose   = require('passport-local-mongoose'),
     commentRoutes           = require("./routes/comments"),
     methodOverride          = require("method-override"),
     indexRoutes             = require('./routes/index'),
     LocalStrategy           = require('passport-local'),
     bookRoutes              = require("./routes/books"),
+    User                    = require("./models/User"),
     bodyParser              = require("body-parser"),
     mongoose                = require("mongoose"),
     passport                = require('passport'),
@@ -32,6 +32,11 @@ app.use(passport.session());
 passport.use(new LocalStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
+
+app.use((req, res, next) => {
+    res.locals.currentUser = req.user;
+    next();
+});
 
 app.use(indexRoutes);
 app.use(bookRoutes);

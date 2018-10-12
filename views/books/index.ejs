@@ -5,9 +5,9 @@
   <p>This is a template for a simple marketing or informational website. It includes a large callout called a jumbotron and three supporting pieces of content. Use it as a starting point to create something more unique.</p>
   <a class="ui blue button" href="/books/search">Search Books &raquo;</a>
   </div>
-  <div class="ui link cards">
+  <div class="ui link cards grid">
     <% books.forEach(function(book) { %>    
-      <span class="card">
+      <span class="card three wide column">
         <a class="image" href="/books/<%= book._id %>">
           <img src="<%= book.image %>">
         </a>
@@ -26,7 +26,7 @@
           </span>
           <span>
             <i class="star icon"></i>
-            Rating(may be)
+            Rating
           </span>
         </div>
       </span>    
