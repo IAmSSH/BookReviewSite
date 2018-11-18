@@ -23,11 +23,13 @@
                 </div>
                 <div class="content">
                     <%  %>
-                    <a class="header" href="/books/new/<%= book.volumeInfo.title %>"><p><%= book.volumeInfo.title %></p></a>
+                    <a class="header" href="/books/new/<%= book.id %>"><p><%= book.volumeInfo.title %></p></a>
                     <div class="meta">                   
                         <span>
-                            <% for(var i = 0; i < book.volumeInfo.authors.length; i++){ %>
-                            <p><%= book.volumeInfo.authors[i] %></p>        
+                            <% if(book.volumeInfo.authors){ %>
+                                <% for(var i = 0; i < book.volumeInfo.authors.length; i++){ %>
+                                <p><%= book.volumeInfo.authors[i] %></p>        
+                                <% } %>
                             <% } %>
                         </span>                  
                     </div>

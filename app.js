@@ -6,6 +6,7 @@ var Book                    = require("/Programming/web-projects/BookReviewSite/
     LocalStrategy           = require('passport-local'),
     bookRoutes              = require("./routes/books"),
     User                    = require("./models/User"),
+    flash                   = require("connect-flash"),
     bodyParser              = require("body-parser"),
     mongoose                = require("mongoose"),
     passport                = require('passport'),
@@ -32,9 +33,12 @@ app.use(passport.session());
 passport.use(new LocalStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
+app.use(flash());
 
 app.use((req, res, next) => {
     res.locals.currentUser = req.user;
+    res.locals.success = req.flash("success");
+    res.locals.error = req.flash("error");
     next();
 });
 

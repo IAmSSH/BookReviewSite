@@ -8,6 +8,8 @@ var Book = require('../models/book')
     recievedBook = [],
     router = express.Router();
 
+var bookWriter;
+
 // ROOT ROUTE
 router.get("/", function(req, res) {
     res.redirect("/books");
@@ -23,9 +25,19 @@ router.get("/books", function(req, res) {
 });
 
 // NEW ROUTE
-router.get("/books/new/:bookName", middleware.isLoggedIn, function(req, res) {
-    var bookName  = req.params.bookName;
-    var bookImage = req.params.bookImage;
+router.get("/books/new/:bookId", middleware.isLoggedIn, function(req, res) {
+    var bookId = req.params.bookId;
+    
+    recievedBook.forEach(book => {
+        if(book.id === bookId) {
+            bookName = book.volumeInfo.title;
+            bookWriter = book.volumeInfo.authors[0];
+            if(book.volumeInfo.imageLinks.thumbnail)
+            bookImage = book.volumeInfo.imageLinks.thumbnail;
+        }
+    })
+    // var bookName  = req.params.bookName;    
+    // var bookImage = req.params.bookImage;
     res.render("books/new", {bookName: bookName, bookImage: bookImage});
 });
 
@@ -36,12 +48,15 @@ router.post("/books/create", middleware.isLoggedIn, function(req, res) {
         id: req.user._id,
         username: req.user.username
     };
-    newBook.writer = recievedBook.
+    newBook.writer = bookWriter;
     Book.create(newBook, function(err, book) {
         if(err) {
             console.log("Error creating book");
             console.log(err);
+            req.flash("error", "Failed to create review.")
+            res.redirect("/books");
         } else {
+            req.flash("success", "New review successfully created.")
             res.redirect("/books");
         }
     });
@@ -97,6 +112,7 @@ router.put("/books/:id", middleware.isLoggedIn, function(req, res) {
             console.log("Error updating");
             console.log(log);
         } else {
+            req.flash("success", "Review successfully updated.")
             res.redirect('/books/'+ req.params.id);
         }
     });
@@ -108,6 +124,7 @@ router.delete("/books/:id", middleware.isLoggedIn, function(req, res) {
         if(err) {
             console.log("error deleting " + err);
         } else {
+            req.flash("success", "Deleted successfully.")
             res.redirect("/books");
         }
     });
